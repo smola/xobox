@@ -2,7 +2,7 @@
 name = "xobox"
 version = "0.1.0"
 authors = ["Santiago M. Mola <santi@mola.io>"]
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 
