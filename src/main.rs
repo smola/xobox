@@ -4,11 +4,11 @@ mod help;
 fn main() {
     let args: Vec<String> = std::env::args().collect();
     if args.len() == 1 {
-        std::process::exit(help::run_help());
+        std::process::exit(help::run());
     }
 
     if args[1] == "--help" || args[1] == "-h" {
-        std::process::exit(help::run_help());
+        std::process::exit(help::run());
     }
 
     let program = &args[1];
