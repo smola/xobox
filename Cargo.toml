@@ -6,6 +6,9 @@ edition = "2018"
 
 [dependencies]
 
+[dev-dependencies]
+duct = "0.13.5"
+
 [profile.release]
 opt-level = 'z'
 lto = true
