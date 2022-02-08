@@ -23,7 +23,4 @@ fn run(args: &[String]) -> i32 {
     0
 }
 
-pub const COMMAND: Command = Command {
-    name: "yes",
-    run,
-};
+pub const COMMAND: Command = Command { name: "yes", run };

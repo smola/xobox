@@ -1,0 +1,35 @@
+name: ci
+on: [push, pull_request]
+env:
+  RUST_BACKTRACE: 1
+jobs:
+  lint-fmt:
+    name: lint (rustfmt)
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: format
+        run: cargo fmt --all --check
+  lint-clippy:
+    name: lint (clippy)
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: clippy
+        run: cargo clippy -- -F clippy::pedantic -F clippy::all
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: test
+        run: cargo test
