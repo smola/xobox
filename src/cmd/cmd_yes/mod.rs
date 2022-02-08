@@ -9,13 +9,13 @@ fn run(args: &[String]) -> i32 {
         s.push_str("y\n");
     } else {
         s.push_str(args.join(" ").as_str());
-        s.push_str("\n");
+        s.push('\n');
     }
 
     let b = s.as_bytes();
     let mut out = std::io::stdout();
     loop {
-        if let Err(_) = out.write(b) {
+        if out.write(b).is_err() {
             break;
         }
     }
@@ -25,5 +25,5 @@ fn run(args: &[String]) -> i32 {
 
 pub const COMMAND: Command = Command {
     name: "yes",
-    run: run,
+    run,
 };

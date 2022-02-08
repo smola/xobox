@@ -1,6 +1,6 @@
 use super::cmd;
 
-pub fn run_help() -> i32 {
+pub fn run() -> i32 {
     println!("xobox");
     println!();
     println!("Functions:");
@@ -17,6 +17,6 @@ mod tests {
 
     #[test]
     fn test_run_help() {
-        assert_eq!(run_help(), 0 as i32)
+        assert_eq!(run(), 0 as i32)
     }
 }
