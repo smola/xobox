@@ -26,6 +26,16 @@ jobs:
   test:
     name: test
     runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: run tests
+        run: cargo test
+  test-coverage:
+    name: test with coverage
+    runs-on: ubuntu-latest
     container:
       image: xd009642/tarpaulin:latest
       options: --security-opt seccomp=unconfined

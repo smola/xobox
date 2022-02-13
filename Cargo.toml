@@ -9,6 +9,7 @@ bstr = "0.2.17"
 
 [dev-dependencies]
 duct = "0.13.5"
+pretty_assertions = "1.1.0"
 
 [profile.release]
 opt-level = 'z'

@@ -10,7 +10,9 @@ fn run(args: &[OsString]) -> i32 {
         b"y\n".to_vec()
     } else {
         let args = &args.iter().map(|s| s.as_bytes()).collect::<Vec<_>>();
-        bstr::join(b" ", args)
+        let mut v: Vec<u8> = bstr::join(b" ", args);
+        v.push(b'\n');
+        v
     };
     let mut out = std::io::stdout();
     loop {

@@ -1,5 +1,6 @@
 mod common;
 use duct::cmd;
+use pretty_assertions::assert_eq;
 
 #[test]
 fn test_false() {
