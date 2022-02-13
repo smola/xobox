@@ -1,14 +1,16 @@
+use std::ffi::OsString;
 use std::io::prelude::*;
+use std::os::unix::ffi::OsStrExt;
 
 use super::base::Command;
 
-fn run(args: &[String]) -> i32 {
+fn run(args: &[OsString]) -> i32 {
     // TODO: --help
     // TODO: [SUFFIX]
     if let Some(file) = args.get(0) {
         let mut out = std::io::stdout();
-        let s = basename(file);
-        if out.write(s.as_bytes()).is_err() {
+        let s = basename(file.as_bytes());
+        if out.write(s).is_err() {
             return 1;
         }
         if out.write("\n".as_bytes()).is_err() {
@@ -24,17 +26,17 @@ pub const COMMAND: Command = Command {
     run,
 };
 
-fn basename(file: &str) -> String {
+fn basename(file: &[u8]) -> &[u8] {
     if file.is_empty() {
-        return String::from("");
+        return b"";
     }
-    match file.rfind(|c: char| c != '/') {
-        None => String::from("/"),
+    match file.iter().rposition(|c: &u8| c != &b'/') {
+        None => b"/",
         Some(last_non_slash) => {
             let file = &file[0..=last_non_slash];
-            match file.rfind(|c: char| c == '/') {
-                None => String::from(file),
-                Some(last_slash) => String::from(&file[last_slash + 1..]),
+            match file.iter().rposition(|c: &u8| c == &b'/') {
+                None => file,
+                Some(last_slash) => &file[last_slash + 1..],
             }
         }
     }
@@ -46,46 +48,28 @@ mod tests {
 
     #[test]
     fn test_empty() {
-        assert_eq!(basename(&String::from("")), String::from(""));
+        assert_eq!(basename(b""), b"");
     }
 
     #[test]
     fn test_slash() {
-        assert_eq!(basename(&String::from("/")), String::from("/"));
+        assert_eq!(basename(b"/"), b"/");
     }
 
     #[test]
     fn test_slashes() {
-        assert_eq!(basename(&String::from("//")), String::from("/"));
-        assert_eq!(basename(&String::from("///")), String::from("/"));
-        assert_eq!(basename(&String::from("////")), String::from("/"));
+        assert_eq!(basename(b"//"), b"/");
+        assert_eq!(basename(b"///"), b"/");
+        assert_eq!(basename(b"////"), b"/");
     }
 
     #[test]
     fn test_simple() {
-        assert_eq!(
-            basename(&String::from("basename")),
-            String::from("basename")
-        );
-        assert_eq!(
-            basename(&String::from("basename/")),
-            String::from("basename")
-        );
-        assert_eq!(
-            basename(&String::from("basename//")),
-            String::from("basename")
-        );
-        assert_eq!(
-            basename(&String::from("/basename")),
-            String::from("basename")
-        );
-        assert_eq!(
-            basename(&String::from("other/basename")),
-            String::from("basename")
-        );
-        assert_eq!(
-            basename(&String::from("/other/basename")),
-            String::from("basename")
-        );
+        assert_eq!(basename(b"basename"), b"basename");
+        assert_eq!(basename(b"basename/"), b"basename");
+        assert_eq!(basename(b"basename//"), b"basename");
+        assert_eq!(basename(b"/basename"), b"basename");
+        assert_eq!(basename(b"other/basename"), b"basename");
+        assert_eq!(basename(b"/other/basename"), b"basename");
     }
 }

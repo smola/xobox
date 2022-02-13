@@ -1,21 +1,20 @@
+use std::ffi::OsString;
 use std::io::prelude::*;
+use std::os::unix::ffi::OsStrExt;
 
 use super::base::Command;
 
-fn run(args: &[String]) -> i32 {
+fn run(args: &[OsString]) -> i32 {
     // TODO: --help
-    let mut s = String::new();
-    if args.is_empty() {
-        s.push_str("y\n");
+    let s: Vec<u8> = if args.is_empty() {
+        b"y\n".to_vec()
     } else {
-        s.push_str(args.join(" ").as_str());
-        s.push('\n');
-    }
-
-    let b = s.as_bytes();
+        let args = &args.iter().map(|s| s.as_bytes()).collect::<Vec<_>>();
+        bstr::join(b" ", args)
+    };
     let mut out = std::io::stdout();
     loop {
-        if out.write(b).is_err() {
+        if out.write(&s[..]).is_err() {
             break;
         }
     }

@@ -1,8 +1,10 @@
 mod cmd;
 mod help;
 
+use std::ffi::OsString;
+
 fn main() {
-    let args: Vec<String> = std::env::args().collect();
+    let args: Vec<OsString> = std::env::args_os().collect();
     if args.len() == 1 {
         std::process::exit(help::run());
     }
@@ -11,7 +13,8 @@ fn main() {
         std::process::exit(help::run());
     }
 
-    let program = &args[1];
+    // TODO: file on non-valid UTF-8 program
+    let program = args[1].to_string_lossy();
     let args = &args[2..];
 
     for c in cmd::COMMANDS {

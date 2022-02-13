@@ -1,6 +1,7 @@
 use super::base::Command;
+use std::ffi::OsString;
 
 pub const COMMAND: Command = Command {
     name: "true",
-    run: |_args: &[String]| -> i32 { 0 },
+    run: |_args: &[OsString]| -> i32 { 0 },
 };
