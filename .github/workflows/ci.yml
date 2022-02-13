@@ -26,10 +26,17 @@ jobs:
   test:
     name: test
     runs-on: ubuntu-latest
+    container:
+      image: xd009642/tarpaulin:latest
+      options: --security-opt seccomp=unconfined
     steps:
       - name: checkout
         uses: actions/checkout@v2
         with:
           fetch-depth: 1
-      - name: test
-        run: cargo test
+      - name: run tests with coverage
+        run: cargo tarpaulin --all-features --follow-exec --out Xml
+      - name: upload to covdecov.io
+        uses: codecov/codecov-action@v2
+        with:
+          fail_ci_if_error: true
