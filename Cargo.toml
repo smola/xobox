@@ -5,6 +5,7 @@ authors = ["Santiago M. Mola <santi@mola.io>"]
 edition = "2021"
 
 [dependencies]
+bstr = "0.2.17"
 
 [dev-dependencies]
 duct = "0.13.5"
