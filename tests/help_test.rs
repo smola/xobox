@@ -11,7 +11,7 @@ fn test_help() {
         .unwrap();
     assert_eq!(Some(0), res.status.code());
     assert_eq!(
-        "xobox\n\nFunctions:\n\tbasename\n\tfalse\n\ttrue\n\tyes\n",
+        "xobox\n\nFunctions:\n\tbasename\n\tdirname\n\tfalse\n\ttrue\n\tyes\n",
         String::from_utf8(res.stdout).unwrap()
     );
 }
@@ -25,7 +25,7 @@ fn test_help_flag_help() {
         .unwrap();
     assert_eq!(Some(0), res.status.code());
     assert_eq!(
-        "xobox\n\nFunctions:\n\tbasename\n\tfalse\n\ttrue\n\tyes\n",
+        "xobox\n\nFunctions:\n\tbasename\n\tdirname\n\tfalse\n\ttrue\n\tyes\n",
         String::from_utf8(res.stdout).unwrap()
     );
 }
@@ -39,7 +39,7 @@ fn test_help_flag_h() {
         .unwrap();
     assert_eq!(Some(0), res.status.code());
     assert_eq!(
-        "xobox\n\nFunctions:\n\tbasename\n\tfalse\n\ttrue\n\tyes\n",
+        "xobox\n\nFunctions:\n\tbasename\n\tdirname\n\tfalse\n\ttrue\n\tyes\n",
         String::from_utf8(res.stdout).unwrap()
     );
 }
