@@ -6,6 +6,7 @@ edition = "2021"
 
 [dependencies]
 bstr = "0.2.17"
+signal-hook = "0.3.13"
 
 [dev-dependencies]
 duct = "0.13.5"
